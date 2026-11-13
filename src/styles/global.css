@@ -1,0 +1,848 @@
+/* Design system, part 4: type and interface.
+   One type family, Libre Caslon, the kind of face the 19th-century survey
+   plates of Giza were set in. Fonts are bundled, not loaded from a font host. */
+@font-face {
+  font-family: 'Caslon Display';
+  src: url('@fontsource/libre-caslon-display/files/libre-caslon-display-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Caslon Text';
+  src: url('@fontsource/libre-caslon-text/files/libre-caslon-text-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Caslon Text';
+  src: url('@fontsource/libre-caslon-text/files/libre-caslon-text-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --limestone: #e9d9b8;
+  --sand: #c9a477;
+  --ochre: #d5a34c;
+  --sandstone: #986747;
+  --nile: #477f87;
+  --lapis: #344d6b;
+  --shadow: #40352c;
+
+  --display: 'Caslon Display', 'Caslon Text', Georgia, serif;
+  --text: 'Caslon Text', Georgia, serif;
+  --edge: clamp(18px, 3.2vw, 44px);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--shadow);
+  color: var(--limestone);
+  font-family: var(--text);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+  /* Up-down swipes scroll the journey; sideways swipes are left for looking around. */
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.stage {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+}
+.stage.is-ready {
+  opacity: 1;
+}
+
+.scroll-track {
+  position: relative;
+  width: 100%;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2; /* above the scroll track, so the slider can be reached */
+  pointer-events: none;
+  text-shadow: 0 1px 14px rgba(64, 53, 44, 0.55);
+}
+
+/* Darkens only the lower edge, where the words sit. */
+.scrim {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 46%;
+  background: linear-gradient(to top, rgba(64, 53, 44, 0.62), rgba(64, 53, 44, 0));
+}
+
+/* In scene 6 the sky can be pale, so the top edge gets a soft shade too. */
+.scrim-top {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 30%;
+  opacity: 0;
+  background: linear-gradient(to bottom, rgba(64, 53, 44, 0.6), rgba(64, 53, 44, 0));
+  transition: opacity 1s var(--ease);
+}
+html.orbiting .scrim-top {
+  opacity: 1;
+}
+
+.masthead {
+  position: absolute;
+  inset: var(--edge) var(--edge) auto var(--edge);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.wordmark {
+  font-family: var(--display);
+  font-size: 1.3rem;
+  letter-spacing: 0.01em;
+  color: inherit;
+  text-decoration: none;
+  pointer-events: auto;
+}
+.wordmark:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+.year {
+  margin: 0;
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.6vw, 2.2rem);
+  line-height: 1;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.year i {
+  font-family: var(--text);
+  font-size: 0.55em;
+  opacity: 0.85;
+}
+.year span {
+  font-size: 0.55em;
+  letter-spacing: 0.04em;
+}
+
+/* Opening title */
+.hero {
+  position: absolute;
+  left: var(--edge);
+  bottom: calc(var(--edge) + 1vh);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.hero.is-on {
+  opacity: 1;
+  transform: none;
+}
+.hero-region {
+  margin: 0 0 0.2em 0.35em;
+  font-style: italic;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+}
+.hero-place {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(6.5rem, 23vw, 19rem);
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  text-shadow: 0 2px 40px rgba(64, 53, 44, 0.35);
+  animation: settle 2.2s var(--ease) both;
+}
+.hero-hint {
+  display: flex;
+  align-items: center;
+  gap: 0.9em;
+  margin: 1.6em 0 0 0.35em;
+  font-size: 1rem;
+}
+.hero-line {
+  width: 3.2em;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  animation: draw 2.4s var(--ease) 0.8s both;
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    letter-spacing: 0.02em;
+  }
+}
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* Scene captions */
+.caption {
+  position: absolute;
+  left: var(--edge);
+  bottom: calc(var(--edge) + 1vh);
+  width: min(30rem, calc(100vw - var(--edge) * 2 - 3.4rem));
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.caption.is-on {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.15s;
+}
+.caption h2 {
+  margin: 0 0 0.3em;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.caption p {
+  margin: 0;
+  font-size: clamp(1.02rem, 1.25vw, 1.15rem);
+  line-height: 1.55;
+}
+.caption .note {
+  margin-top: 0.7em;
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.86;
+}
+
+/* The Then/Now slider, drawn like the measuring rod laid on its side */
+.era {
+  position: absolute;
+  left: var(--edge);
+  bottom: calc(var(--edge) - 0.6rem);
+  width: min(26rem, calc(100vw - var(--edge) * 2 - 3.4rem));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease);
+}
+.era.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.era input {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 44px; /* a comfortable target for a thumb */
+  margin: 0;
+  background:
+    linear-gradient(var(--limestone), var(--limestone)) left center / calc(var(--at) * 100%) 2px no-repeat,
+    repeating-linear-gradient(to right, rgba(233, 217, 184, 0.75) 0 1px, transparent 1px calc(100% / 45)) left calc(50% + 7px) / 100% 7px no-repeat,
+    linear-gradient(rgba(233, 217, 184, 0.45), rgba(233, 217, 184, 0.45)) center / 100% 1px no-repeat;
+  cursor: ew-resize;
+  touch-action: none;
+}
+.era input::-webkit-slider-runnable-track {
+  height: 44px;
+  background: transparent;
+}
+.era input::-moz-range-track {
+  height: 44px;
+  background: transparent;
+}
+.era input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: 11px;
+  border: 1px solid var(--limestone);
+  border-radius: 50%;
+  background: var(--shadow);
+  box-shadow: 0 0 0 4px rgba(64, 53, 44, 0.35), 0 0 14px rgba(233, 217, 184, 0.7);
+}
+.era input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--limestone);
+  border-radius: 50%;
+  background: var(--shadow);
+  box-shadow: 0 0 0 4px rgba(64, 53, 44, 0.35), 0 0 14px rgba(233, 217, 184, 0.7);
+}
+.era input:focus-visible {
+  outline: 1px solid var(--limestone);
+  outline-offset: 4px;
+}
+.era-ends {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -0.35em;
+  font-style: italic;
+  font-size: 0.92rem;
+}
+
+/* Captions that make room for the slider underneath */
+.caption.is-lifted {
+  bottom: calc(var(--edge) + 5.4rem);
+}
+
+/* Hidden from the eye but read aloud by screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+button:focus-visible,
+input:focus-visible {
+  outline: 1px solid var(--limestone);
+  outline-offset: 4px;
+}
+
+/* Sound toggle, under the wordmark */
+.sound {
+  position: absolute;
+  left: var(--edge);
+  top: calc(var(--edge) + 2.4rem);
+  display: flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 44px;
+  margin-top: -0.7rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-style: italic;
+  font-size: 0.98rem;
+  cursor: pointer;
+  pointer-events: auto;
+  opacity: 0.85;
+  text-shadow: inherit;
+}
+.sound:hover {
+  opacity: 1;
+}
+.sound-wave {
+  width: 1.5em;
+  height: 0.8em;
+  background: repeating-linear-gradient(to right, currentColor 0 1px, transparent 1px 4px);
+  -webkit-mask-image: linear-gradient(to right, #000 0 100%);
+  opacity: 0.45;
+  transform-origin: left center;
+  transform: scaleY(0.35);
+  transition: transform 0.4s var(--ease), opacity 0.4s;
+}
+.sound-wave.is-on {
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+/* Hotspot markers: a ring on the stone, with a name on hover or focus */
+.hot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+  will-change: transform;
+}
+.hot.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.hot-ring {
+  position: absolute;
+  inset: 11px;
+  border: 1px solid var(--limestone);
+  border-radius: 50%;
+  background: rgba(64, 53, 44, 0.45);
+  box-shadow: 0 0 0 3px rgba(64, 53, 44, 0.3), 0 0 14px rgba(233, 217, 184, 0.65);
+  transition: transform 0.3s var(--ease);
+}
+.hot-ring::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 50%;
+  background: var(--limestone);
+}
+.hot:hover .hot-ring,
+.hot:focus-visible .hot-ring {
+  transform: scale(1.25);
+}
+.hot::after {
+  content: attr(data-title);
+  position: absolute;
+  left: 50%;
+  top: calc(100% - 2px);
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.hot:hover::after,
+.hot:focus-visible::after {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hot.is-on .hot-ring {
+    animation: beacon 3.2s ease-in-out infinite;
+  }
+}
+@keyframes beacon {
+  50% {
+    box-shadow: 0 0 0 7px rgba(64, 53, 44, 0.12), 0 0 20px rgba(233, 217, 184, 0.9);
+  }
+}
+
+/* The card that opens from a marker */
+.sheet {
+  position: absolute;
+  right: calc(var(--edge) + 3.8rem);
+  bottom: var(--edge);
+  width: min(25rem, calc(100vw - var(--edge) * 2 - 4rem));
+  max-height: 60vh;
+  overflow: auto;
+  padding: 1.2rem 1.3rem 1rem;
+  background: rgba(64, 53, 44, 0.82);
+  border: 1px solid rgba(233, 217, 184, 0.45);
+  pointer-events: auto;
+  text-shadow: none;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  animation: sheet-in 0.5s var(--ease) both;
+}
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+.sheet:focus {
+  outline: none;
+}
+.sheet h3 {
+  margin: 0 0 0.45em;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 1.7rem;
+  line-height: 1.1;
+}
+.sheet p {
+  margin: 0 0 0.7em;
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+.sheet .sheet-when {
+  margin: 0 0 0.2em;
+  font-style: italic;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+.sheet .note,
+.sheet .sheet-sources {
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.85;
+}
+.sheet-sources span {
+  font-style: normal;
+  letter-spacing: 0.02em;
+  opacity: 0.8;
+}
+.sheet-close {
+  min-height: 44px;
+  padding: 0 0.2rem;
+  border: 0;
+  background: none;
+  font-style: italic;
+  font-size: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+  cursor: pointer;
+}
+.has-sheet .caption,
+.has-sheet .hint {
+  opacity: 0;
+}
+
+/* The next place in the atlas */
+.next {
+  position: absolute;
+  right: calc(var(--edge) + 3.8rem);
+  top: calc(var(--edge) + 3.4rem);
+  text-align: right;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease);
+}
+.next.is-on {
+  opacity: 0.95;
+}
+.next p {
+  margin: 0;
+}
+.next-label {
+  font-style: italic;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+.next-place {
+  font-family: var(--display);
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+.next-place span {
+  font-family: var(--text);
+  font-size: 0.65em;
+}
+.next-status {
+  font-style: italic;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+/* Camera buttons in scene 6 */
+.tools {
+  position: absolute;
+  right: calc(var(--edge) + 3.8rem);
+  bottom: var(--edge);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 1.1rem;
+  max-width: 22rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease);
+}
+.tools.is-on {
+  opacity: 1;
+  pointer-events: auto;
+}
+.has-sheet .tools {
+  opacity: 0;
+  pointer-events: none;
+}
+.tools button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 0.2rem;
+  border: 0;
+  background: none;
+  font-style: italic;
+  font-size: 1.05rem;
+  cursor: pointer;
+  text-shadow: inherit;
+}
+.tools button:first-child,
+.tools button:nth-child(2) {
+  font-style: normal;
+  font-family: var(--text);
+  font-size: 2rem;
+  line-height: 1;
+}
+.tools button:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+
+/* Shown where the visitor may look around */
+.hint {
+  position: absolute;
+  left: 50%;
+  top: calc(var(--edge) + 4.2rem);
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin: 0;
+  font-style: italic;
+  font-size: 1rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translate(-50%, -6px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.hint.is-on {
+  opacity: 0.92;
+  transform: translate(-50%, 0);
+  transition-delay: 0.5s;
+}
+.hint-mark {
+  width: 1.9em;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 8px rgba(233, 217, 184, 0.8);
+  animation: sway 2.6s ease-in-out infinite;
+}
+@keyframes sway {
+  50% {
+    transform: translateX(0.5em);
+  }
+}
+html.can-look {
+  cursor: grab;
+}
+html.can-look:active {
+  cursor: grabbing;
+}
+/* While orbiting, drags steer the camera instead of scrolling the page. */
+html.orbiting,
+html.orbiting body {
+  touch-action: none;
+}
+
+/* Progress, drawn as a builder's measuring rod */
+.rod {
+  position: absolute;
+  right: var(--edge);
+  top: 50%;
+  height: min(40vh, 320px);
+  width: 1.6rem;
+  transform: translateY(-50%);
+}
+.rod-scale {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 9px;
+  border-right: 1px solid rgba(233, 217, 184, 0.8);
+  background: repeating-linear-gradient(to bottom, rgba(233, 217, 184, 0.75) 0 1px, transparent 1px calc(100% / 28));
+  -webkit-mask-image: linear-gradient(to right, transparent 0 4px, #000 4px);
+  mask-image: linear-gradient(to right, transparent 0 4px, #000 4px);
+}
+.rod {
+  pointer-events: none;
+}
+.rod-stop {
+  position: absolute;
+  right: 16px;
+  min-width: 2.2rem;
+  height: 2.2rem;
+  padding: 0 0.4rem 0 0;
+  border: 0;
+  background: none;
+  transform: translateY(-50%);
+  text-align: right;
+  font-family: var(--display);
+  font-size: 0.95rem;
+  opacity: 0.85;
+  cursor: pointer;
+  pointer-events: auto;
+  text-shadow: 0 0 3px rgba(64, 53, 44, 0.7), 0 1px 12px rgba(64, 53, 44, 0.6);
+  transition: opacity 0.4s;
+}
+.rod-stop:hover {
+  opacity: 1;
+}
+.rod-stop.is-on {
+  opacity: 1;
+}
+.rod-marker {
+  position: absolute;
+  right: -3px;
+  width: 15px;
+  height: 1px;
+  background: var(--limestone);
+  box-shadow: 0 0 10px rgba(233, 217, 184, 0.9);
+}
+
+@media (max-width: 640px) {
+  /* Phone layout for scene 6: stack the bottom controls and move the hint
+     and the next-place card apart. */
+  .hint {
+    top: calc(var(--edge) + 7.6rem);
+  }
+  .next {
+    right: var(--edge);
+    top: calc(var(--edge) + 2.4rem);
+  }
+  .tools {
+    left: var(--edge);
+    right: calc(var(--edge) + 2.6rem);
+    bottom: calc(var(--edge) + 2.9rem);
+    max-width: none;
+    justify-content: space-between;
+  }
+  .caption.is-lifted {
+    bottom: calc(var(--edge) + 8.6rem);
+  }
+  .sheet {
+    left: var(--edge);
+    right: var(--edge);
+    width: auto;
+    bottom: calc(var(--edge) + 3.6rem); /* leaves the slider reachable */
+    max-height: 54vh;
+    padding-bottom: 0.4rem;
+  }
+  .has-sheet .rod {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .hero-place {
+    font-size: 34vw;
+  }
+  .rod {
+    height: 30vh;
+    top: 42%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .caption,
+  .hint,
+  .stage {
+    transition-duration: 0.01s;
+  }
+  .hero-place,
+  .hero-line,
+  .hint-mark {
+    animation: none;
+  }
+}
+
+/* Loading screen: lifts once the world is drawing */
+.loading {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 0.7rem;
+  background: var(--earth, #40352C);
+  color: var(--limestone);
+  transition: opacity 1.2s var(--ease), visibility 0s 1.2s;
+}
+.loading.is-done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loading-wordmark {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 2.2rem;
+}
+.loading-line {
+  margin: 0;
+  font-style: italic;
+  opacity: 0.8;
+}
+.loading-rod {
+  position: relative;
+  width: 11rem;
+  height: 1px;
+  margin-top: 0.8rem;
+  background: rgba(233, 217, 184, 0.3);
+  overflow: hidden;
+}
+.loading-rod::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  background: var(--limestone);
+  animation: rod-slide 1.8s var(--ease) infinite;
+}
+@keyframes rod-slide {
+  from {
+    left: -35%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
+/* Plain-text version when the 3D world cannot run */
+.fallback {
+  max-width: 38rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+  background: #40352C;
+  color: var(--limestone);
+  min-height: 100vh;
+  user-select: text;
+  touch-action: auto;
+}
+html:has(.fallback),
+html:has(.fallback) body {
+  background: #40352C;
+  overflow: auto;
+}
+.fallback-wordmark {
+  font-style: italic;
+  margin: 0;
+}
+.fallback h1 {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 2.6rem;
+  margin: 0.2em 0;
+}
+.fallback h2 {
+  font-family: var(--display);
+  font-weight: 400;
+  margin: 1.6em 0 0.2em;
+}
+.fallback p {
+  line-height: 1.6;
+}
+.fallback-reason,
+.fallback .note {
+  font-style: italic;
+  opacity: 0.85;
+}
+.fallback button {
+  min-height: 44px;
+  margin-top: 1.6rem;
+  padding: 0 1.2rem;
+  border: 1px solid var(--limestone);
+  background: none;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-rod::after {
+    animation: none;
+    left: 0;
+    width: 100%;
+    opacity: 0.6;
+  }
+  .loading,
+  .sheet {
+    transition-duration: 0.01s;
+    animation: none;
+  }
+}

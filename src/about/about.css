@@ -1,0 +1,62 @@
+.ab { min-height: 100svh; }
+.ab main > section:not(.doc) { padding-inline: var(--pad); }
+
+.ab-head { padding-top: clamp(112px, 17vh, 168px); padding-bottom: 72px; }
+.ab-head h1 { margin: 0 0 18px; max-width: 16ch; font-size: clamp(40px, 5.6vw, 76px); line-height: 1.04; font-weight: 600; letter-spacing: -0.035em; text-wrap: balance; }
+.ab-head p { margin: 0; max-width: 46ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: var(--sand); }
+.ab-head > * { animation: rise-in 800ms var(--ease-out) both; }
+.ab-head > p { animation-delay: 110ms; }
+.ab-jump { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 28px; }
+.ab-jump a { display: inline-flex; align-items: center; min-height: 44px; color: var(--champagne); font-size: 15px; text-decoration: underline; text-underline-offset: 5px; text-decoration-color: rgba(224, 190, 128, 0.8); }
+
+.ab h2 { margin: 0 0 24px; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.08; font-weight: 600; letter-spacing: -0.03em; }
+.ab-marks, .ab-how { padding-bottom: 72px; }
+
+.marks-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.marks-grid li { padding: 24px 26px 26px; border-radius: 22px; }
+.marks-grid h3, .how-list h3 { margin: 14px 0 8px; font-size: 20px; line-height: 1.25; font-weight: 600; letter-spacing: -0.02em; }
+.marks-grid p, .how-list p { margin: 0; color: var(--sand); font-size: 16px; line-height: 1.5; }
+.marks-grid .mark-dot { width: 16px; height: 16px; display: block; }
+.mark-dot.is-documented { background: var(--gold-lit); }
+.mark-dot.is-inferred { border: 2px solid var(--gold-lit); }
+.mark-dot.is-invented { border: 1.5px dashed var(--sand-dim); }
+.mark-dot { border-radius: 50%; }
+
+.how-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.how-list li { padding: 22px 26px 24px; border-radius: 22px; }
+.how-list h3 { margin-top: 0; }
+
+/* Credits, privacy and imprint: one large dark glass panel for reading. */
+.ab main > section.doc { padding: 0 var(--pad) clamp(72px, 9vw, 120px); }
+.ab .doc-in { max-width: 1040px; padding: clamp(28px, 5vw, 64px); border-radius: 28px; background: rgba(14, 18, 22, 0.72); }
+.ab .doc h2 { margin: 0 0 12px; font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; letter-spacing: -0.035em; color: var(--champagne); }
+.ab .doc-lead { margin: 0 0 32px; max-width: 48ch; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.45; color: var(--sand); }
+.ab .doc .doc-h2 { margin: clamp(56px, 7vw, 88px) 0 16px; font-size: clamp(30px, 3.4vw, 42px); scroll-margin-top: 72px; }
+.ab .doc-p { margin: 0 0 14px; max-width: 62ch; font-size: 17px; line-height: 1.55; color: var(--sand); }
+.ab .imprint { font-style: normal; }
+.ab .doc h3 { margin: 48px 0 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.02em; color: var(--champagne); }
+.ab .doc-list { margin: 0; padding: 0 0 0 1.1em; max-width: 78ch; font-size: 15px; line-height: 1.5; color: var(--sand); }
+.ab .doc-list li { padding: 3px 0; }
+.ab .doc-note { margin: 20px 0 0; max-width: 70ch; font-size: 14px; line-height: 1.5; color: var(--sand-dim); }
+#credits { scroll-margin-top: 44px; }
+
+.credits-table { width: 100%; border-collapse: collapse; line-height: 1.45; }
+.credits-table thead th { padding: 0 20px 12px 0; text-align: left; font-size: 13px; font-weight: 500; color: var(--sand-dim); border-bottom: 1px solid rgba(242, 235, 221, 0.4); }
+.credits-table tbody th, .credits-table td { padding: 16px 20px 16px 0; text-align: left; vertical-align: baseline; font-size: 15px; border-bottom: 1px solid rgba(242, 235, 221, 0.14); }
+.credits-table tbody th { width: 30%; font-weight: 600; letter-spacing: -0.01em; color: var(--champagne); }
+.credits-table td { color: var(--sand); }
+.credits-table td:nth-child(2) { width: 38%; }
+.credits-table td:last-child { padding-right: 0; }
+
+@media (max-width: 900px) {
+  .marks-grid, .how-list { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 700px) {
+  .credits-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .credits-table, .credits-table tbody, .credits-table tr, .credits-table tbody th, .credits-table td { display: block; width: auto !important; }
+  .credits-table tr { padding: 16px 0; border-bottom: 1px solid rgba(242, 235, 221, 0.14); }
+  .credits-table tbody th, .credits-table td { padding: 0 !important; border: 0 !important; }
+  .credits-table td { margin-top: 6px; white-space: normal !important; overflow-wrap: anywhere; min-width: 0; }
+  .ab-head { padding-bottom: 48px; }
+}
+@media (prefers-reduced-motion: reduce) { .ab-head > * { animation: none; } }

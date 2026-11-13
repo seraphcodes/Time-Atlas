@@ -1,0 +1,74 @@
+/* Shared by the pages behind the home page (Explore, destination pages).
+   Tokens, navbar and footer come from home.css. */
+:root {
+  --sand: #e3dac6;        /* secondary text on the darkened painting */
+  --sand-dim: #cfc6b0;    /* quiet labels */
+  --gold-lit: #e0be80;    /* gold, lifted so it reads on glass */
+  --pad: max(var(--edge), calc((100vw - 1296px) / 2));
+  --glass: rgba(58, 65, 31, 0.58);   /* olive, from The Pastoral State */
+  --olive-deep: rgba(34, 39, 17, 0.84);
+  --glass-line: rgba(242, 235, 221, 0.2);
+}
+
+/* A place's own image, sharp, under one dark layer. */
+.backdrop { position: fixed; inset: 0; z-index: 0; overflow: hidden; background: var(--obsidian); }
+.backdrop img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 42%; user-select: none; }
+.backdrop::after { content: ''; position: absolute; inset: 0; background: rgba(16, 20, 24, var(--dark, 0.72)); }
+.backdrop ~ * { position: relative; z-index: 1; }
+.backdrop ~ .nav { position: fixed; z-index: 50; }
+
+/* Museum glass: frosted, a lit top edge, a soft shadow underneath. */
+.glass {
+  background: linear-gradient(180deg, rgba(242, 235, 221, 0.09) 0%, rgba(242, 235, 221, 0.02) 38%, rgba(242, 235, 221, 0) 100%), var(--glass);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid var(--glass-line);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16), inset 0 -1px 0 rgba(0, 0, 0, 0.25), 0 24px 60px rgba(0, 0, 0, 0.32);
+}
+
+.btn-ghost { background: rgba(242, 235, 221, 0.06); color: var(--champagne); border: 1px solid rgba(242, 235, 221, 0.5); }
+.btn-ghost:hover { background: rgba(242, 235, 221, 0.14); }
+
+.node-status, .panel-status { font-weight: 600; color: var(--gold-lit); }
+.node-status.is-idea, .panel-status.is-idea { color: var(--sand-dim); font-weight: 500; }
+
+@keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: linear-gradient(180deg, rgba(242, 235, 221, 0.08), rgba(242, 235, 221, 0) 40%), rgba(52, 59, 27, 0.9); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* Footer, shared: the painting again, sharp, under one darker layer. */
+footer.foot {
+  position: relative; z-index: 1;
+  padding: clamp(88px, 10vw, 136px) var(--pad) 56px;
+  border-top: 1px solid var(--glass-line);
+  background:
+    linear-gradient(rgba(16, 20, 24, 0.72), rgba(16, 20, 24, 0.72)),
+    url('../home/img/second-wide.webp') 50% 44% / cover no-repeat,
+    var(--obsidian);
+}
+.foot-in { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr); gap: 48px clamp(32px, 6vw, 96px); max-width: 1296px; margin: 0 auto; }
+.foot-mark { margin: 0 0 18px; font-size: 13px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--champagne); }
+.foot-tag { margin: 0 0 18px; font-size: clamp(26px, 3vw, 40px); line-height: 1.15; font-weight: 600; letter-spacing: -0.025em; color: var(--champagne); max-width: 18ch; }
+.foot-credit { margin: 0; max-width: 54ch; font-size: 14px; line-height: 1.5; color: var(--sand-dim); }
+.foot-col { display: flex; flex-direction: column; align-items: flex-start; }
+.foot-h { margin: 0 0 12px; font-size: 14px; font-weight: 600; color: var(--gold-lit); }
+.foot-col a { display: inline-flex; align-items: center; gap: 14px; min-height: 52px; font-size: 16px; color: var(--sand); text-decoration: none; }
+.foot-ico { flex: none; display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; color: var(--gold-lit); background: rgba(58, 65, 31, 0.5); border: 1px solid rgba(242, 235, 221, 0.22); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14); transition: background 200ms var(--ease-out), border-color 200ms var(--ease-out); }
+.foot-col a:hover .foot-ico { background: rgba(86, 96, 46, 0.7); border-color: var(--gold-lit); }
+.foot-col a:hover { color: var(--champagne); text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 800px) {
+  .foot-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .foot-brand { grid-column: 1 / -1; }
+  footer.foot { background:
+    linear-gradient(rgba(16, 20, 24, 0.72), rgba(16, 20, 24, 0.72)),
+    url('../home/img/second-narrow.webp') 50% 44% / cover no-repeat,
+    var(--obsidian); }
+}
+
+/* shared by Explore and Timeline cards */
+.panel-status { margin: 0 0 8px; font-size: 14px; }
+.panel-status span { opacity: 0.6; margin: 0 4px; }
+.panel-credit { margin: 14px 0 0; font-size: 12.5px; line-height: 1.4; color: var(--sand-dim); }
+.panel-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
