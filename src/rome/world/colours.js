@@ -1,0 +1,20 @@
+// Colours of Roman building materials, shared by all monuments.
+export const C = {
+  marble: '#EEE7D9',
+  marbleWarm: '#E6DAC4',
+  travertine: '#E0D2B7',
+  tuff: '#B8A07A',
+  brick: '#B4684C',
+  stucco: '#E7D6B6',
+  ochre: '#D7A867',
+  roof: '#A5553A',
+  roofDark: '#8E4A34',
+  red: '#A4473A',
+  blue: '#465F7E',
+  paving: '#D6CCB8',
+  sand: '#D9BE8C',
+  wood: '#8A6747',
+  bronze: '#6F6545',
+  green: '#6E7F4E',
+  dark: '#3D332C',
+}

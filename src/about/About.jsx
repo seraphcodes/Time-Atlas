@@ -1,6 +1,6 @@
 import Nav from '../home/Nav'
 import Footer from '../site/Footer'
-import { imageCredits, softwareCredits } from '../site/credits'
+import { imageCredits, romeSources, softwareCredits } from '../site/credits'
 import { how, imprint, intro, marks, privacy } from './about-content'
 import bgWideWebp from '../home/img/second-wide.webp'
 import bgWideJpg from '../home/img/second-wide.jpg'
@@ -78,6 +78,12 @@ export default function About() {
                 ))}
               </tbody>
             </table>
+
+            <h3>Sources for Rome</h3>
+            <p className="doc-note">The books and web pages the Rome reconstruction and its texts are built from. Each Rome card and the evidence ledger on the Rome page say which source backs which claim.</p>
+            <ul className="doc-list">
+              {romeSources.map((s) => <li key={s}>{s}</li>)}
+            </ul>
 
             <h3>Software</h3>
             <ul className="doc-list">

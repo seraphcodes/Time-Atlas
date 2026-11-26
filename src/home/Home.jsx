@@ -3,7 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Nav from './Nav'
 import Footer from '../site/Footer'
-import { GIZA_HREF, credits, giza, hero, last, next, second, steps } from './content'
+import { GIZA_HREF, ROME_HREF, credits, giza, hero, last, next, second, steps } from './content'
 import { STATUS, pct, places } from '../site/places'
 import dawnWebp from '../site/img/giza-dawn.webp'
 import dawnJpg from '../site/img/giza-dawn.jpg'
@@ -466,6 +466,7 @@ export default function Home() {
             <p>{last.lead}</p>
             <div className="btn-row">
               <a className="btn" href={GIZA_HREF}>{last.cta}</a>
+              <a className="btn" href={ROME_HREF}>{last.ctaRome}</a>
               <a className="btn btn-ghost" href={'./explore/'}>{last.more}</a>
             </div>
           </div>

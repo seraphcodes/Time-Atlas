@@ -105,5 +105,5 @@ export const giza = {
     orbitTouch: 'Drag to orbit \u00b7 pinch to zoom',
   },
   // The next place in the atlas. It does not exist yet, and says so.
-  next: { label: 'Next in the atlas', place: 'Rome', date: 'c. 100 AD', status: 'Planned' },
+  next: { label: 'Next in the atlas', place: 'Rome', date: 'AD 100', status: 'Open now. Enter Rome', href: '../rome-100-ad/' },
 }

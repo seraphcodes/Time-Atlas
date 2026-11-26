@@ -135,8 +135,8 @@ export default function GizaPage() {
           <a className="btn" href={ENTER}>{intro.cta}</a>
           <div className="gz-next glass">
             <span className="gz-next-ring" aria-hidden="true">{next.place[0]}</span>
-            <p><span>{next.status}</span><b>{next.place}, {next.date}</b>Not built yet.</p>
-            <a className="btn btn-ghost" href={ROOT + 'explore/'}>See all places</a>
+            <p><span>{next.status}</span><b>{next.place}, {next.date}</b>The second place we built.</p>
+            <a className="btn btn-ghost" href={ROOT + next.href}>Read the Rome guide</a>
           </div>
         </section>
       </main>

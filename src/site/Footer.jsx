@@ -4,6 +4,7 @@ const ABOUT = 'about/'
 const EXPLORE = 'explore/'
 const TIMELINE = 'timeline/'
 const GIZA = 'destinations/giza/'
+const ROME = 'destinations/rome/'
 
 // Plain line icons, drawn for this footer. Each one says what the link is:
 // compass, hourglass, pyramid, info, camera, shield, scales.
@@ -24,6 +25,11 @@ const ICONS = {
     <>
       <path d="M12 3.5 3 17l11 3.5 7-4.5z" />
       <path d="M12 3.5 14 20.5" />
+    </>
+  ),
+  rome: (
+    <>
+      <path d="M4 20h16M6 20V9M10 20V9M14 20V9M18 20V9M4 9h16M12 4 4 9h16z" />
     </>
   ),
   about: (
@@ -77,6 +83,7 @@ export default function Footer({ root = './', note }) {
           <a href={root + EXPLORE}><Icon name="explore" />Explore</a>
           <a href={root + TIMELINE}><Icon name="timeline" />Timeline</a>
           <a href={root + GIZA}><Icon name="giza" />Giza field guide</a>
+          <a href={root + ROME}><Icon name="rome" />Rome field guide</a>
         </nav>
         <nav className="foot-col" aria-label="About this site">
           <p className="foot-h">This site</p>

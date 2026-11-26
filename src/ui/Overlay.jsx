@@ -224,11 +224,13 @@ export function Overlay() {
       <EraControl on={view.slider} year={view.year} />
 
       <aside className={`next ${view.orbit ? 'is-on' : ''}`} aria-hidden={!view.orbit}>
-        <p className="next-label">{giza.next.label}</p>
-        <p className="next-place">
-          {giza.next.place}, <span>{giza.next.date}</span>
-        </p>
-        <p className="next-status">{giza.next.status}</p>
+        <a className="next-link" href={giza.next.href} tabIndex={view.orbit ? 0 : -1}>
+          <span className="next-label">{giza.next.label}</span>
+          <span className="next-place">
+            {giza.next.place}, <span>{giza.next.date}</span>
+          </span>
+          <span className="next-status">{giza.next.status}</span>
+        </a>
       </aside>
 
       <div className={`tools ${view.orbit ? 'is-on' : ''}`} role="group" aria-label="Camera">

@@ -2,6 +2,7 @@
 // Links are written from the site root; each page passes its own way back to the root.
 export const GIZA_HREF = './experience/giza/'
 export const GIZA_PATH = 'experience/giza/'
+export const ROME_HREF = './experience/rome-100-ad/'
 
 export const nav = [
   // Pages that are not built yet have no href: they render as quiet, inactive text.
@@ -62,16 +63,17 @@ export const steps = {
 
 export const next = {
   title: 'Where we go next.',
-  lead: 'Rome is planned. Athens and Angkor are ideas, not promises. The photos show these places today, because we have not rebuilt them yet.',
+  lead: 'Athens and Angkor are ideas, not promises. The photos show these places today, because we have not rebuilt them yet.',
   cta: 'See all places on the time line',
 }
 
 export const last = {
   title: 'Go and stand there.',
-  lead: 'Giza is open now. No account, nothing to install.',
+  lead: 'Giza and Rome are open now. No account, nothing to install.',
   cta: 'Enter Giza, 2560 BC',
+  ctaRome: 'Enter Rome, AD 100',
   more: 'See all places',
 }
 
 export const credits =
-  'Paintings by Thomas Cole (public domain), digital images from Wikimedia Commons. Giza pictures are our own 3D reconstruction. Photos of other places are credited beside them.'
+  'Paintings by Thomas Cole (public domain), digital images from Wikimedia Commons. Giza and Rome pictures are our own 3D reconstruction. Photos of other places are credited beside them.'

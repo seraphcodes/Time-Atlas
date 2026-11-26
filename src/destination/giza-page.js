@@ -85,4 +85,4 @@ export const sources = [
   'Hader Sheisha and others, “Nile waterscapes facilitated the construction of the Giza pyramids during the 3rd millennium BCE”, PNAS 119(37), e2202530119 (2022)',
 ]
 
-export const next = { place: 'Rome', date: 'c. 100 AD', status: 'Planned next' }
+export const next = { place: 'Rome', date: 'AD 100', status: 'Open now', href: 'destinations/rome/' }

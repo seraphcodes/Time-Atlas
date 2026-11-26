@@ -10,8 +10,8 @@
 // Full licence details live in src/site/credits.js.
 import gizaThumb from './img/giza-thumb.webp'
 import gizaFinished from './img/giza-finished-s.webp'
-import romeThumb from './img/rome-thumb.webp'
-import romeToday from './img/rome-today.webp'
+import romeThumb from './img/rome-open-thumb.webp'
+import romeOpen from './img/rome-open-s.webp'
 import athensThumb from './img/athens-thumb.webp'
 import athensToday from './img/athens-today.webp'
 import angkorThumb from './img/angkor-thumb.webp'
@@ -53,14 +53,20 @@ export const places = [
   {
     id: 'rome',
     name: 'Rome',
-    year: 'c. 100 AD',
+    year: 'AD 100',
     at: 100,
-    status: 'planned',
+    status: 'open',
     thumb: romeThumb,
-    image: romeToday,
-    imageAlt: 'The Colosseum in Rome in evening light, seen today.',
-    credit: 'The Colosseum today. Photo: Paris Orlando, CC BY-SA 4.0 (cropped)',
-    blurb: 'Not built yet. Rome around 100 AD is the next place we plan to build.',
+    image: romeOpen,
+    imageAlt: 'The Colosseum in 3D, with a crowd around it and the red roofs of Rome behind, seen from above.',
+    blurb: 'Fly over a city of perhaps a million people, stand in the Roman Forum and beside the Colosseum, walk a crowded street in the Subura, stroll through the emperor’s palace and stand on the track of the Circus Maximus while Trajan rebuilds it.',
+    facts: [
+      ['Colosseum, size', '189 × 156 m'],
+      ['Seats, estimated', 'about 50,000'],
+      ['People in Rome, estimated', '0.5 to 1 million'],
+    ],
+    experience: 'experience/rome-100-ad/',
+    page: 'destinations/rome/',
   },
   {
     id: 'angkor',

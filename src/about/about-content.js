@@ -13,7 +13,7 @@ export const marks = [
 
 export const how = [
   ['Every fact has a source.', 'Each place page lists what you see, how sure we are, and where it comes from, in an evidence ledger at the end.'],
-  ['We check before we show.', 'Facts were compared with at least two independent sources. The standard books they come from were not read cover to cover by us, so this is careful work, not peer review.'],
+  ['We check before we show.', 'Facts were compared with at least two independent sources. The standard books they come from were not read cover to cover by us, and the modern Rome guides were reached through sources that quote them, so this is careful work, not peer review.'],
   ['Reconstructions are not photographs.', 'Everything in 3D is our own model. Photos of places we have not built yet show the site as it is today, and are credited.'],
   ['Not built yet means not built yet.', 'Planned places and ideas are marked as such. The year on them is where we would start, not a promise.'],
 ]

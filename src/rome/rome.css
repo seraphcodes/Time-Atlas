@@ -1,0 +1,242 @@
+/* Rome uses the TimeAtlas platform colours, Obsidian and Champagne, with the
+   same Caslon type as Giza so the two experiences read as one atlas. */
+html.rome {
+  --limestone: #f2ebdd; /* champagne */
+  --shadow: #101418; /* obsidian */
+  --gold: #c7a36a;
+  --slate: #5a5f66;
+}
+html.rome,
+html.rome body {
+  background: #101418;
+  color: #f2ebdd;
+}
+.rome-overlay {
+  text-shadow: 0 1px 14px rgba(16, 20, 24, 0.6);
+}
+.rome-overlay .scrim {
+  background: linear-gradient(to top, rgba(16, 20, 24, 0.66), rgba(16, 20, 24, 0));
+}
+.rome-overlay .scrim-top {
+  background: linear-gradient(to bottom, rgba(16, 20, 24, 0.5), rgba(16, 20, 24, 0));
+}
+.hero-sub {
+  margin: 0.4rem 0 0;
+  font-style: italic;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  opacity: 0.85;
+}
+
+/* markers: dark ring, champagne dot, names always shown when close */
+.rome-overlay .hot-ring {
+  border-color: var(--limestone);
+  background: rgba(16, 20, 24, 0.5);
+  box-shadow: 0 0 0 3px rgba(16, 20, 24, 0.28), 0 0 14px rgba(242, 235, 221, 0.55);
+}
+.rome-overlay .hot-ring::after {
+  background: var(--gold);
+}
+.rome-overlay .hot.has-label::after {
+  opacity: 1;
+}
+
+/* the card */
+.rome-sheet {
+  bottom: calc(var(--edge) + 7.2rem);
+  max-height: calc(100vh - var(--edge) * 2 - 12rem);
+  background: rgba(16, 20, 24, 0.84);
+  border-color: rgba(199, 163, 106, 0.55);
+}
+.sheet-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0 0 0.6rem !important;
+}
+.tag {
+  padding: 0.18rem 0.55rem;
+  border: 1px solid rgba(242, 235, 221, 0.45);
+  border-radius: 999px;
+  font-size: 0.82rem !important;
+  font-style: normal;
+  letter-spacing: 0.01em;
+}
+.tag-documented {
+  border-color: rgba(167, 196, 160, 0.8);
+}
+.tag-inferred {
+  border-color: rgba(199, 163, 106, 0.9);
+}
+.tag-invented {
+  border-color: rgba(214, 140, 120, 0.9);
+}
+.tag-being-rebuilt,
+.tag-not-yet-built {
+  background: rgba(199, 163, 106, 0.18);
+}
+
+/* free exploration: a dock of places at the bottom */
+.rome-dock {
+  position: absolute;
+  left: 50%;
+  bottom: max(var(--edge), env(safe-area-inset-bottom));
+  transform: translate(-50%, 12px);
+  width: min(44rem, calc(100vw - var(--edge) * 2));
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.rome-dock.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.rome-dock.is-on .chip {
+  pointer-events: auto;
+}
+.rome-hint {
+  margin: 0 0 0.7rem;
+  font-style: italic;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+.rome-chips {
+  display: flex;
+  gap: 0.45rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.chip {
+  min-height: 44px;
+  padding: 0 1rem;
+  border: 1px solid rgba(242, 235, 221, 0.35);
+  border-radius: 999px;
+  background: rgba(16, 20, 24, 0.55);
+  color: inherit;
+  font-family: var(--text);
+  font-size: 0.98rem;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  transition: background 0.25s, border-color 0.25s;
+}
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--gold);
+  background: rgba(16, 20, 24, 0.75);
+  outline: none;
+}
+.chip-quiet {
+  font-style: italic;
+  border-color: transparent;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
+.has-sheet .rome-dock .rome-hint {
+  opacity: 0;
+}
+
+/* On a phone the card becomes a bottom sheet above the dock. */
+@media (max-width: 640px) {
+  .rome-sheet {
+    left: var(--edge);
+    right: var(--edge);
+    width: auto;
+    bottom: calc(var(--edge) + 3.6rem);
+    max-height: 46vh;
+  }
+  /* one row of places that scrolls sideways */
+  .rome-chips {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin: 0 calc(var(--edge) * -1);
+    padding-inline: var(--edge);
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+  .rome-chips::-webkit-scrollbar {
+    display: none;
+  }
+  .rome-chips .chip {
+    flex: none;
+  }
+  .rome-dock {
+    width: 100vw;
+  }
+  .rome-hint {
+    padding-inline: var(--edge);
+  }
+  .chip {
+    padding: 0 0.8rem;
+    font-size: 0.92rem;
+  }
+}
+
+.sheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.2rem 0 0.8rem !important;
+}
+.sheet-actions .chip {
+  border-color: var(--gold);
+}
+.sheet-actions .chip[aria-pressed='true'] {
+  background: rgba(199, 163, 106, 0.25);
+}
+
+/* then and now (session 8): the date in the corner becomes a two-way switch */
+.rome-era {
+  display: inline-flex;
+  margin: -6px -4px 0 0;
+  pointer-events: auto;
+  padding: 3px;
+  border: 1px solid rgba(242, 235, 221, 0.35);
+  border-radius: 999px;
+  background: rgba(16, 20, 24, 0.6);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.era-opt {
+  min-height: 40px;
+  min-width: 5.6rem;
+  padding: 0 0.9rem;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  cursor: pointer;
+  opacity: 0.72;
+  transition: background 0.25s var(--ease), color 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.era-opt span {
+  font-size: 0.7em;
+  letter-spacing: 0.04em;
+}
+.era-opt[aria-pressed='true'] {
+  background: var(--limestone);
+  color: var(--shadow);
+  opacity: 1;
+}
+.era-opt:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+}
+.tag-ruin {
+  background: rgba(200, 176, 140, 0.18);
+}
+.tag-built-later {
+  background: rgba(166, 184, 202, 0.22);
+  border-color: rgba(166, 184, 202, 0.8) !important;
+}
+.chip-walk {
+  border-color: rgba(199, 163, 106, 0.8);
+}

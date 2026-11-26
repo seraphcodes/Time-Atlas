@@ -9,6 +9,8 @@ import bgNarrowJpg from '../home/img/second-narrow.jpg'
 
 const ROOT = '../'
 const chapters = [...places].sort((a, b) => a.at - b.at)
+const WORDS = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten']
+const openCount = places.filter((p) => p.status === 'open').length
 const round100 = (n) => (Math.round(n / 100) * 100).toLocaleString('en')
 // There is no year 0, so a BC year is one further from today than the plain subtraction says.
 const yearsAgo = (at) => AXIS.to - at - (at < 0 ? 1 : 0)
@@ -115,7 +117,7 @@ export default function Timeline() {
               <i className="tl-dot is-today" aria-hidden="true" />
               <div className="tl-end glass">
                 <h2>Today.</h2>
-                <p>Four places are on the map. One is open to walk through. See them side by side on one line.</p>
+                <p>{WORDS[places.length]} places are on the map. {WORDS[openCount]} {openCount === 1 ? 'is' : 'are'} open to walk through. See them side by side on one line.</p>
                 <a className="btn" href={ROOT + 'explore/'}>Open Explore</a>
               </div>
             </li>
